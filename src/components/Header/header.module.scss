@@ -1,8 +1,14 @@
-.header-container {
-    background-color: var(--background);
-    width: 100%;
-    height: 105px;
-  }
-.link {
+.header {
+  background-color: var(--background);
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
-  
+
+.header-content {
+  max-width: 1120px;
+  width: 100%;
+  height: 105px;
+  padding-top: 5rem;
+  padding-left: 82px;
+}

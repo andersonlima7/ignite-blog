@@ -1,9 +1,14 @@
 import { GetStaticProps } from 'next';
+import { FiCalendar } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
+import { useState } from 'react';
 
 interface Post {
   uid?: string;
@@ -24,19 +29,61 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home(postsResponse) {
-  console.log(postsResponse.postsResponse.results);
+export default function Home({ postsPagination }: HomeProps) {
+  const [currentPosts, setCurrentPosts] = useState(postsPagination);
 
-  return <p>Posts</p>;
+  function loadMorePosts() {
+    fetch(postsPagination.next_page)
+      .then(response => response.json())
+      .then(data =>
+        setCurrentPosts(prevState => ({
+          results: [...prevState.results.concat(data.results)],
+          next_page: data.next_page,
+        }))
+      );
+  }
+
+  return (
+    <div className={styles['content-container']}>
+      <div className={styles.content}>
+        {currentPosts.results.map(post => {
+          const data = post.data;
+          return (
+            <div key={post.uid}>
+              <p className={styles.title}>{data.title}</p>
+              <p className={styles.subtitle}>{data.subtitle}</p>
+              <div className={styles['info-container']}>
+                <div className={styles['info-content']}>
+                  <FiCalendar />
+                  <span>
+                    {format(new Date(post.first_publication_date), 'PP', {
+                      locale: ptBR,
+                    })}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div className={styles['button-container']}>
+          {currentPosts.next_page ? (
+            <button className={styles.loadButton} onClick={loadMorePosts}>
+              Carregar mais posts
+            </button>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export const getStaticProps = async () => {
   const prismic = getPrismicClient({});
-  const postsResponse = await prismic.getByType('posts');
+  const postsResponse = await prismic.getByType('posts', { pageSize: 2 });
 
   return {
     props: {
-      postsResponse,
+      postsPagination: postsResponse,
     },
   };
   // TODO

@@ -1,1 +1,51 @@
-// TODO
+.content-container {
+  padding-top: 65px;
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.content {
+  max-width: 945px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--body);
+  margin-bottom: 24px;
+}
+
+.info-container {
+  display: flex;
+  gap: 28px;
+}
+
+.info-content {
+  display: flex;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--info);
+}
+
+.loadButton {
+  color: var(--highlight);
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+}
+
+.button-container {
+  max-width: 950px;
+  width: 100%;
+}
