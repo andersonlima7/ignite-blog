@@ -7,11 +7,8 @@ import { FiCalendar, FiUser, FiClock } from 'react-icons/fi';
 import PrismicDOM from 'prismic-dom';
 import { getPrismicClient } from '../../services/prismic';
 
+import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
-
-type Body =
-  | { type: 'paragraph'; text: string }
-  | { type: 'image'; url: string };
 
 interface Post {
   first_publication_date: string | null;
@@ -23,7 +20,9 @@ interface Post {
     author: string;
     content: {
       heading: string;
-      body: Body[];
+      body: {
+        text: string;
+      }[];
     }[];
   };
 }
@@ -34,6 +33,10 @@ interface PostProps {
 
 export default function Post({ post }: PostProps) {
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <p>Carregando...</p>;
+  }
 
   const [timeToRead, setTimeToRead] = useState(0);
   console.log(post);
@@ -48,10 +51,6 @@ export default function Post({ post }: PostProps) {
     const time = Math.ceil(numbOfWords / 200);
     setTimeToRead(time);
   }, []);
-
-  if (router.isFallback) {
-    return <p>Carregando...</p>;
-  }
 
   return (
     <div className={styles.container}>
@@ -86,18 +85,18 @@ export default function Post({ post }: PostProps) {
             <div key={content.heading ?? `content${index}`}>
               <h2 className={styles.paragraphHeader}>{content.heading}</h2>
               {content.body.map(body => {
-                if (body.type === 'paragraph')
+                if (body['type'] === 'paragraph')
                   return (
                     <p key={body.text} className={styles.body}>
                       {body.text}
                     </p>
                   );
-                else if (body.type === 'image')
+                else if (body['type'] === 'image')
                   return (
                     <img
                       className={styles.bodyImage}
-                      key={body.url}
-                      src={body.url}
+                      key={body['url']}
+                      src={body['url']}
                     />
                   );
               })}
@@ -114,7 +113,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await prismic.getByType('posts');
 
   const paths = posts.results.map((post, index) => {
-    if (index <= 1) return { params: { slug: post.uid } };
+    return { params: { slug: post.uid } };
   });
 
   return {
