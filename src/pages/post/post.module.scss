@@ -1,1 +1,76 @@
-// TODO
+.container {
+  margin-top: 2.5rem;
+  margin-bottom: 9.375rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.banner {
+  object-fit: cover;
+  max-width: 1920px;
+}
+
+.info-container {
+  margin-top: 24px;
+  display: flex;
+  gap: 28px;
+}
+
+.info-content {
+  display: flex;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--info);
+}
+
+.content {
+  margin-top: 80px;
+  max-width: 720px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.title .paragraphHeader {
+  font-style: normal;
+  font-weight: 700;
+  line-height: 58px;
+  letter-spacing: -0.5px;
+  color: var(--heading);
+}
+
+.title {
+  font-size: 3rem;
+}
+
+.paragraphHeader {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  font-size: 2.25rem;
+}
+
+.info {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 17px;
+  color: var(--info);
+}
+
+.body {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 25px;
+  text-align: justify;
+  color: var(--body);
+}
+
+.bodyImage {
+  max-width: 100%;
+  object-fit: cover;
+}

@@ -61,6 +61,10 @@ export default function Home({ postsPagination }: HomeProps) {
                     })}
                   </span>
                 </div>
+                <div className={styles['info-content']}>
+                  <FiUser />
+                  <span>{post.data.author}</span>
+                </div>
               </div>
             </div>
           );
