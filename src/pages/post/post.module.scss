@@ -21,6 +21,8 @@
 
 .info-content {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   font-size: 0.875rem;
   color: var(--info);

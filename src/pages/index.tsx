@@ -4,6 +4,8 @@ import { FiUser } from 'react-icons/fi';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
+import Link from 'next/link';
+
 import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
@@ -50,7 +52,11 @@ export default function Home({ postsPagination }: HomeProps) {
           const data = post.data;
           return (
             <div key={post.uid}>
-              <p className={styles.title}>{data.title}</p>
+              <Link href={`/post/${post.uid}`} passHref>
+                <a>
+                  <p className={styles.title}>{data.title}</p>
+                </a>
+              </Link>
               <p className={styles.subtitle}>{data.subtitle}</p>
               <div className={styles['info-container']}>
                 <div className={styles['info-content']}>
